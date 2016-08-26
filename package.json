@@ -1,11 +1,12 @@
 {
   "name": "react-payment-card",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "React components for credit card inputs, with validation and auto formatting.",
-  "main": "distribution/index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/ThomasRooney/react-payment-card",
   "scripts": {
-    "build": "babel src --out-file dist/react-payment-card.js"
+    "build": "babel src --out-dir dist",
+    "prepublish": "npm run build"
   },
   "author": "Thomas Rooney",
   "license": "MIT",
