@@ -39,27 +39,24 @@ export class CardNumberInput extends React.Component {
 
   format(validatedStr) {
     let num = validatedStr.replace(/\D/g, '');
-    const card = cardFromNumber(num);
+    const card = valid.number(num).card;
 
     if (!card) {
       return num;
     }
 
-    const upperLength = card.length[card.length.length - 1];
+    const upperLength = card.lengths[card.lengths.length - 1];
+
     num = num.slice(0, upperLength);
 
+    const groups = [];
 
-    if (card.format.global) {
-      return num.match(card.format).join(' ');
-    }
+    card.gaps.concat(num.length).reduce((a,b) => {
+      groups.push(num.slice(a,b));
+      return b;
+    }, 0);
 
-    const groups = card.format.exec(num);
-    if (!groups) {
-      return '';
-    }
-    return groups.shift()
-          .filter((n) => n)
-          .join(' ');
+    return groups.filter(g => g.length > 0).join(' ');
   }
 
   formatAndValidate(e) {

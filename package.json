@@ -1,6 +1,6 @@
 {
   "name": "react-payment-card",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "React components for credit card inputs, with validation and auto formatting.",
   "main": "dist/index.js",
   "repository": "https://github.com/ThomasRooney/react-payment-card",
