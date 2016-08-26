@@ -26,7 +26,7 @@ export class CardNumberInput extends React.Component {
 
     const value = (this.state.value + digit).replace(/\D/g, '');
 
-    return valid(value).isPotentiallyValid;
+    return valid.number(value).isPotentiallyValid;
   }
 
 
