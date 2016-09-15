@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-
+import MaybeReduxFormHooked from './MaybeReduxFormHooked';
 var valid = require('card-validator');
 
-export class CardNumberInput extends React.Component {
+export class CardNumberInput extends MaybeReduxFormHooked {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
 
     this.restrictNumeric = this.restrictNumeric.bind(this);
     this.restrictCardNumber = this.restrictCardNumber.bind(this);
@@ -60,14 +59,17 @@ export class CardNumberInput extends React.Component {
   }
 
   formatAndValidate(e) {
-    const newCharacters = e.target.value.slice(this.state.value.length);
-    if (Array.prototype.map.call(newCharacters, (c) => c.charCodeAt(0)).reduce((a, b) => a && this.restrictNumeric(b) && this.restrictCardNumber(b), true)) {
-      this.setState({value: this.format(e.target.value)});
+    let newVal = e.target.value;
+    if (Array.prototype.map.call(newVal, (c) => c.charCodeAt(0))
+                       .reduce((a, b) => a && this.restrictNumeric(b), true)
+        && valid.number(e.target.value).isPotentiallyValid) {
+      newVal = this.format(newVal);
+      this.setState({value: newVal});
     }
   }
 
   render() {
-    return <input type='text' size='20' {...this.props.attrs} onKeyPress={this.validate} onChange={this.formatAndValidate} value={this.state.value} placeholder='Credit Card Number'/>;
+    return <input type='text' size='20x' {...this.props.attrs} {...this.props.input} onKeyPress={this.validate} onChange={this.formatAndValidate} value={this.state.value} placeholder='Credit Card Number'/>;
   }
 }
 export default CardNumberInput;
